@@ -1,16 +1,64 @@
-# React + Vite
+# CampusCare – Hostel Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+CampusCare is a hostel management system developed to simplify hostel administration using a web-based application.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Student management
+- Hostel room management and allocation
+- Mess attendance tracking
+- Student complaint management
+- Dashboard for hostel information
+- Machine learning-based attendance prediction
+- ETL data processing pipeline
+- Task scheduling and completion tracking
 
-## React Compiler
+## Technology Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Frontend**
+- React
+- Vite
+- CSS
 
-## Expanding the Oxlint configuration
+**Backend**
+- Python
+- FastAPI
+- SQLite
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+**Data Processing and Machine Learning**
+- Pandas
+- NumPy
+- Scikit-learn
+
+## Running the Project Locally
+
+### Backend
+
+1. Open a terminal in the `backend` folder.
+2. Activate your Python virtual environment.
+3. Install dependencies:
+
+   `pip install -r requirements.txt`
+
+4. Start the FastAPI server:
+
+   `uvicorn main:app --reload`
+
+5. Open the API documentation at `http://127.0.0.1:8000/docs`.
+
+### Frontend
+
+1. Open a terminal in the `frontend` folder.
+2. Install dependencies:
+
+   `npm install`
+
+3. Start the frontend:
+
+   `npm run dev`
+
+4. Open the local URL displayed in the terminal.
+
+## Project Status
+
+The core application has been developed and tested locally. Deployment is a separate step and has not yet been completed.
