@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from ml.attendance_model import predict_attendance
 from pydantic import BaseModel
 import sqlite3
+import psycopg2
+import os
 
 from db.database import get_connection, create_tables
 from scheduling.scheduler import add_task, get_tasks, complete_task
@@ -53,6 +55,34 @@ def health():
         "status": "CampusCare backend is running"
     }
 
+@app.get("/db-check")
+def db_check():
+    connection = None
+    cursor = None
+
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        cursor.execute("SELECT COUNT(*) FROM students")
+        result = cursor.fetchone()
+
+        return {
+            "database_url_configured": bool(os.getenv("DATABASE_URL")),
+            "students_visible_to_api": result[0]
+        }
+
+    except Exception as error:
+        return {
+            "database_url_configured": bool(os.getenv("DATABASE_URL")),
+            "error": str(error)
+        }
+
+    finally:
+        if cursor:
+            cursor.close()
+        if connection:
+            connection.close()
+
 
 # -------------------------
 # Student Model
@@ -98,7 +128,7 @@ def add_student(student: Student):
             "student_id": student_id
         }
 
-    except sqlite3.IntegrityError:
+    except (sqlite3.IntegrityError, psycopg2.IntegrityError):
         raise HTTPException(
             status_code=400,
             detail="Email already exists"
@@ -251,7 +281,7 @@ def add_room(room: Room):
             "room_id": room_id
         }
 
-    except sqlite3.IntegrityError:
+    except (sqlite3.IntegrityError, psycopg2.IntegrityError):
         raise HTTPException(
             status_code=400,
             detail="Room number already exists"
